@@ -160,7 +160,6 @@ __`Note`__
   - zadd [key] [score] [val]: set add
   - zrem [key] [val]: set remove
   - zrange [key] [from] [to]: like lrange with awsome options:
-    - [REV]: reverses
     - [LIMIT offset count]: only support with BYSCORE and BYLEX
     - [WITHSCORES]: return value with its score
   - zrank [key] [val]: 0-start position of value in sorted set

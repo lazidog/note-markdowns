@@ -28,7 +28,7 @@
 - __FROM__: image gốc (thường sử dụng tag alphine gọn nhẹ)
 - __WORKDIR__: Thiết lập thư mục đang làm việc cho các cmd khác như: RUN, CMD, ENTRYPOINT, COPY, ADD,…
 - __ARG__: chỉ dùng trong quá trình build images
-- __ENV__: thiết lập biến môi trường key - value, cos 
+- __ENV__: thiết lập biến môi trường key - value, cos
 - __RUN__: chạy các lệnh khi build image (thường dùng để cài đặt các dependencies)
 - __COPY__: sao chép các file, folder vào container
 - __EXPOSE__: khai báo port lắng nghe của image.
