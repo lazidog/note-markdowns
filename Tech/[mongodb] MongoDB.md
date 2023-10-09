@@ -4,7 +4,24 @@
 
 MongoDB data is displayed in JSON and stored in BSON (Binary JSON)
 
-![JSON and BSON.](./public/images/jsonandbson.PNG)
+```bash
+{"hello": "world"} →
+\x16\x00\x00\x00           // total document size
+\x02                       // 0x02 = type String
+hello\x00                  // field name
+\x06\x00\x00\x00world\x00  // field value
+\x00                       // 0x00 = type EOO ('end of object')
+
+{"BSON": ["awesome", 5.05, 1986]} →
+\x31\x00\x00\x00
+\x04BSON\x00
+\x26\x00\x00\x00
+\x02\x30\x00\x08\x00\x00\x00awesome\x00
+\x01\x31\x00\x33\x33\x33\x33\x33\x33\x14\x40
+\x10\x32\x00\xc2\x07\x00\x00
+\x00
+\x00
+```
 
 JSON objects are containers, wherein a string key is mapped to a value (number, string, boolean, array, null, object)
 
@@ -16,8 +33,6 @@ However, there are 2 issues for usage in a database:
 BSON (Binary JSON) is a binary representation to store data in JSON format, optimized for speed, space, and efficiency.
 
 BSON’s binary structure encodes type and length information, which allows it to be traversed much more quickly compared to JSON
-
-![BSON.](./public/images/bson.PNG)
 
 BSON adds some non-JSON-native data types, like dates and binary data
 
@@ -107,8 +122,6 @@ await EmailModel.find({ $expr: { $regexMatch: {
     } } })
 await UserModel.find({ $expr: { $eq: [ '$firstName', '$lastName' ] } })
 ```
-
-![Aggregation closer look.](./public/images/aggregationsyntax.PNG)
 
 - __Update document__
 
