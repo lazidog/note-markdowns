@@ -1,10 +1,9 @@
-
 # Manage project with github
 
-- __Create project board__
+- **Create project board**
   - `Project tab` => `Create a project`
   - Select template `Feature`
-- __Create `Issues` and `Milestones`__
+- **Create `Issues` and `Milestones`**
   - Create `Milestones` to organize issues and pull requests, or manage the version
   - Choose milestone just created and create issues (`Task`, `Feature`, `Bug`)
     - `Feature`: list all task needed for feature and click small button `convert issue` on each row after submit feature to create new task and link it to feature

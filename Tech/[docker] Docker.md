@@ -6,7 +6,7 @@
 
 ### Concepts
 
-- __Volumes__: cho phép các container độc lập share chung folder, các file config hay static html
+- **Volumes**: cho phép các container độc lập share chung folder, các file config hay static html
 
   ```sh
     docker volume create static-html-share-volume
@@ -16,23 +16,23 @@
     docker run -d --name nginx2 --mount source=static-html-share-volume,destination=/usr/share/html -p 2223:80 node
   ```
 
-- __Images__: là một khuôn mẫu để tạo container và sẽ được build dựa theo Dockerfile
-- __Client__: tương tác với docker thông qua terminal, command sẽ đc gửi tới Docker Daemon
-- __Docker Daemon__: lắng nghe yêu cầu từ Client
-- __Docker Registry__: nơi lưu trữ docker images (AWS, Azure, Docker Hub)
-- __Docker Repository__: tập hợp các docker images cùng tên nhưng khác tag
-- __Docker Compose__: biên soạn và run nhiều docker containers
+- **Images**: là một khuôn mẫu để tạo container và sẽ được build dựa theo Dockerfile
+- **Client**: tương tác với docker thông qua terminal, command sẽ đc gửi tới Docker Daemon
+- **Docker Daemon**: lắng nghe yêu cầu từ Client
+- **Docker Registry**: nơi lưu trữ docker images (AWS, Azure, Docker Hub)
+- **Docker Repository**: tập hợp các docker images cùng tên nhưng khác tag
+- **Docker Compose**: biên soạn và run nhiều docker containers
 
 ### Dockerfile
 
-- __FROM__: image gốc (thường sử dụng tag alphine gọn nhẹ)
-- __WORKDIR__: Thiết lập thư mục đang làm việc cho các cmd khác như: RUN, CMD, ENTRYPOINT, COPY, ADD,…
-- __ARG__: chỉ dùng trong quá trình build images
-- __ENV__: thiết lập biến môi trường key - value, cos
-- __RUN__: chạy các lệnh khi build image (thường dùng để cài đặt các dependencies)
-- __COPY__: sao chép các file, folder vào container
-- __EXPOSE__: khai báo port lắng nghe của image.
-- __VOLUME__: tạo một điểm gắn thư mục để truy cập và lưu trữ data.
+- **FROM**: image gốc (thường sử dụng tag alphine gọn nhẹ)
+- **WORKDIR**: Thiết lập thư mục đang làm việc cho các cmd khác như: RUN, CMD, ENTRYPOINT, COPY, ADD,…
+- **ARG**: chỉ dùng trong quá trình build images
+- **ENV**: thiết lập biến môi trường key - value, cos
+- **RUN**: chạy các lệnh khi build image (thường dùng để cài đặt các dependencies)
+- **COPY**: sao chép các file, folder vào container
+- **EXPOSE**: khai báo port lắng nghe của image.
+- **VOLUME**: tạo một điểm gắn thư mục để truy cập và lưu trữ data.
 
 ## Commands
 
@@ -102,7 +102,7 @@
 - Build một image từ container:
 
 ```shell
-  docker build 
+  docker build
     [--build-arg arg_name=value] // set args for build image process
   -t <tên container>
 ```

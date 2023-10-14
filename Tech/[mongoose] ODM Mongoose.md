@@ -6,7 +6,7 @@
 
 Các ORM sẽ sử dụng 1 SQL database Driver như ODBC, JDBC hoặc OLEDB để chuyển đổi giữa Object notation và Relational notation.
 
-- ODMs  (Object Document Mapping): hỗ trợ mapping giữa Object Model với Document DB
+- ODMs (Object Document Mapping): hỗ trợ mapping giữa Object Model với Document DB
 
 Ví dụ: Mandago, Mongoose trong MongoDB
 
@@ -42,20 +42,20 @@ Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. It ma
 
 Schema maps to MongoDB collection and defines the structure of the document, each key defines a property which will be cast to `SchemaType`
 
-With nested object keys, mongoose only create schema path for leaves (like phone.homePhone, phone.companyPhone) and the brach `phone` dont have path so `phone` cannot have it own validation. If u need it, u must create the __`Subdocuments`__
+With nested object keys, mongoose only create schema path for leaves (like phone.homePhone, phone.companyPhone) and the brach `phone` dont have path so `phone` cannot have it own validation. If u need it, u must create the **`Subdocuments`**
 
 ```js
 const userSchema = new Schema({
   phone: {
     homePhone: String,
-    companyPhone:  String
-  }
+    companyPhone: String,
+  },
 });
 ```
 
 ### Subdocuments
 
- __Subdocuments__ are documents embedded in other documents. In Mongoose, this means you can nest schemas in other schemas. Mongoose has two distinct notions of subdocuments: arrays of subdocuments and single nested subdocuments
+**Subdocuments** are documents embedded in other documents. In Mongoose, this means you can nest schemas in other schemas. Mongoose has two distinct notions of subdocuments: arrays of subdocuments and single nested subdocuments
 
 ```js
 const parentSchema = new Schema({
@@ -65,8 +65,8 @@ const parentSchema = new Schema({
   child: childSchema,
   childRef: {
     type: mongoose.ObjectId,
-    ref: 'Child'
-  }
+    ref: 'Child',
+  },
 });
 const doc = await Parent.findOne().populate('child');
 // populated documents NOT a subdocument. `doc.child` is a separate top-level document.
@@ -74,7 +74,7 @@ const doc = await Parent.findOne().populate('child');
 
 ### ObjectIds
 
-___id__ property is add by default by Mongoose. When you create a new document, Mongoose creates a new id of type __ObjectId__ to your document
+**\_id** property is add by default by Mongoose. When you create a new document, Mongoose creates a new id of type **ObjectId** to your document
 
 > NOTE: mongoose.ObjectId !== mongoose.Types.ObjectId
 > mongoose.ObjectId is mongodb ObjectId, mongoose.Types.ObjectId is mongoose ObjectId
@@ -110,7 +110,7 @@ Assignment.findOne(function (err, doc) {
 
   doc.markModified('dueDate');
   doc.save(callback); // works
-})
+});
 ```
 
 - Buffer
@@ -192,7 +192,7 @@ const blog = new Schema({
    },
    ...
 });
- 
+
 const Blog = mongoose.model('Blog', blog);
 ```
 
@@ -204,7 +204,7 @@ Both Mongoose and the Native driver support the ability to combine documents fro
 
 #### Native `$lookup` (MongoDB v3.2)
 
-It allows to do a __left outer join__ on collections.
+It allows to do a **left outer join** on collections.
 
 Assum we have 2 model as below, instead of storing all info of user, it just store that user’s `_id`
 
@@ -213,7 +213,7 @@ const user = new Schema({
    name: String,
    email: String
 });
- 
+
 const blog = new Schema({
    title: String,
    comments: [{
@@ -222,7 +222,7 @@ const blog = new Schema({
        votes: Number
    }]
 });
- 
+
 const User = mongoose.model('User', user);
 const Blog = mongoose.model('Blog', blog);
 ```
@@ -230,38 +230,41 @@ const Blog = mongoose.model('Blog', blog);
 If we want to make a join-like operation, we could create an aggregation pipeline to do it.
 
 ```js
-db.collection('blog').aggregate([
-  {
-    '$lookup': {
-      'from': 'users', 
-      'localField': 'comments.user', 
-      'foreignField': '_id', 
-      'as': 'users'
-    }
-  }, {}
-], (err, blog) => {
+db.collection('blog').aggregate(
+  [
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'comments.user',
+        foreignField: '_id',
+        as: 'users',
+      },
+    },
+    {},
+  ],
+  (err, blog) => {
     console.log(blog.users); //This would contain an array of users
-});
+  }
+);
 ```
 
 #### Mongoose `Populate`
 
-Like `$lookup`, it allows to create data models that can reference each other. But, it also lets you __reference documents in other collections__.
+Like `$lookup`, it allows to create data models that can reference each other. But, it also lets you **reference documents in other collections**.
 
 Population is the process of replacing the specific paths in document with another document from other collection
 
-Now, if we wanted to populate our user property, instead of just returning the _id, we will make it return the entire document
+Now, if we wanted to populate our user property, instead of just returning the \_id, we will make it return the entire document
 
 ```js
-Blog.
-   findOne({}).
-   populate('comments.user').
-   exec(function (err, blog) {
-       console.log(blog.comments[0].user.name) // Name of user for 1st comment
-   });
+Blog.findOne({})
+  .populate('comments.user')
+  .exec(function (err, blog) {
+    console.log(blog.comments[0].user.name); // Name of user for 1st comment
+  });
 ```
 
-- __How it work?__
+- **How it work?**
 
 > Mongoose's `populate()` method does not use MongoDB's `$lookup` behind the scenes. It simply makes more query to the database.
 
@@ -272,7 +275,14 @@ Mongoose: orders.find({}, { projection: {} })
 Mongoose: users.find({ _id: { '$in': [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ... 60000 more items ] }}, { projection: {} })
 ```
 
-- __Usage__
+- **Populate vs Aggregation**
+
+> | Populate                     | Aggregation               |
+> | ---------------------------- | ------------------------- |
+> | - send multiple queries      | - send one query          |
+> | - processed at `application` | - processed at `Database` |
+
+- **Usage**
 
 Example:
 
@@ -281,26 +291,26 @@ const personSchema = Schema({
   _id: Schema.Types.ObjectId,
   name: String,
   age: Number,
-  stories: [{ type: Schema.Types.ObjectId, ref: 'Story' }]
+  stories: [{ type: Schema.Types.ObjectId, ref: 'Story' }],
 });
 
 const storySchema = Schema({
   author: { type: Schema.Types.ObjectId, ref: 'Person' },
   title: String,
-  fans: [{ type: Schema.Types.ObjectId, ref: 'Person' }]
+  fans: [{ type: Schema.Types.ObjectId, ref: 'Person' }],
 });
 
 const Story = mongoose.model('Story', storySchema);
-const Person = mongoose.model('Person', personSchema)
+const Person = mongoose.model('Person', personSchema);
 ```
 
-_ __Saving ref__
+\_ **Saving ref**
 
 ```js
 const author = new Person({
   _id: new mongoose.Types.ObjectId(),
   name: 'Ian Fleming',
-  age: 50
+  age: 50,
 });
 
 author.save(function (err) {
@@ -308,7 +318,7 @@ author.save(function (err) {
 
   const story1 = new Story({
     title: 'Casino Royale',
-    author: author._id    // assign the _id from the person
+    author: author._id, // assign the _id from the person
   });
 
   story1.save(function (err) {
@@ -317,30 +327,28 @@ author.save(function (err) {
 });
 ```
 
-_ __Population__
+\_ **Population**
 
 ```js
-Story.
-  findOne({ title: 'Casino Royale' }).
-  populate('author').
-  exec(function (err, story) {
+Story.findOne({ title: 'Casino Royale' })
+  .populate('author')
+  .exec(function (err, story) {
     if (err) return handleError(err);
     console.log('The author is %s', story.author.name);
     // => "The author is Ian Fleming"
   });
 ```
 
-_ __No document__
+\_ **No document**
 
 Same as left join, when there is no document, it will be null or empty array
 
-_ __Field selection__
+\_ **Field selection**
 
 ```js
-Story.
-  findOne({ title: /casino royale/i }).
-  populate('author', 'name'). // only return the Persons name
-  exec(function (err, story) {
+Story.findOne({ title: /casino royale/i })
+  .populate('author', 'name') // only return the Persons name
+  .exec(function (err, story) {
     if (err) return handleError(err);
     console.log('The author is %s', story.author.name);
     // prints "The author is Ian Fleming"
@@ -349,7 +357,7 @@ Story.
   });
 ```
 
-_ __Populating Multiple Paths__
+\_ **Populating Multiple Paths**
 
 If you call populate() multiple times with the same path, only the last one will take effect.
 
@@ -362,7 +370,7 @@ Story.
   exec();
 ```
 
-- __Dynamic References via `refPath`__
+- **Dynamic References via `refPath`**
 
 Instead of a hardcoded model name in `ref` which one ref one model, `refPath` will find right model in another property
 
@@ -387,15 +395,18 @@ docModel: {
 }
 ```
 
-- __Populate Virtuals__
+- **Populate Virtuals**
 
 ```js
 const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  email: [{
-    type: mongoose.Schema.Types.ObjectId, ref: 'Email',
-  }],
+  email: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Email',
+    },
+  ],
   /** NOTE
   book: [{type: mongoose.Schema.Types.ObjectId, ref: 'Book'}]
   this is `bad schema design`, the amount of book this user write maybe very large
@@ -414,7 +425,7 @@ userSchema.virtual('books', {
 });
 
 //populate user's books
-(await UserModel.findOne().populate('books')).books
+(await UserModel.findOne().populate('books')).books;
 ```
 
 ## Mongoose helper
@@ -429,9 +440,11 @@ const userSchema = new mongoose.Schema({
   lastName: String,
 });
 
-userSchema.virtual('fullname')
+userSchema
+  .virtual('fullname')
   .get(() => `${this.firstName} ${this.lastName}`)
-  .set(function (fullname) { // this must use function keyword to access `this` userschema
+  .set(function (fullname) {
+    // this must use function keyword to access `this` userschema
     const strs = fullname.split(' ');
     this.lastName = strs.pop();
     this.firstName = _.join(strs, ' ');

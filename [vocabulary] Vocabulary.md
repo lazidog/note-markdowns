@@ -1,4 +1,13 @@
-# PHRASE
+# Vocabulary
+
+## Gerunds
+
+- accuse s/o of doing sth: buộc tội ai đó làm gì đó
+- would prefer + to V sth rather than + V-inf + sth
+- committed to V-ing: cam kết
+- It's no use doing sth: Nó thật vô ích khi làm
+
+## PHRASE
 
 - arrive at: đến (địa điểm nhỏ như Work)
 - arrive in: đến (địa điểm lớn, rộng như town, city)
@@ -32,3 +41,7 @@
 - at your convenience: một cách thuận tiện
 - on the verge of extinction: trên bờ vực tuyệt chủng
 - in the meantime: trong lúc đó
+
+## Structure
+
+> S + be + the 1st/2nd/only/last + N + to do something

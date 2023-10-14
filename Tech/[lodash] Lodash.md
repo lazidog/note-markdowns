@@ -1,43 +1,49 @@
 # Why Lodash?
 
-- __Some func support for collections (Array|Object)__
+- **Some func support for collections (Array|Object)**
 
 Built-in array and object
 
 ```js
-arr.forEach(e => {console.log(e)})
-Object.keys(obj).forEach((key) => { console.log(obj[key]) })
+arr.forEach(e => {
+  console.log(e);
+});
+Object.keys(obj).forEach(key => {
+  console.log(obj[key]);
+});
 ```
 
 Lodash
 
 ```js
-_.forEach(arr, e => console.log(e))
-_.forEach(obj, (val, key) => console.log(key, val))
+_.forEach(arr, e => console.log(e));
+_.forEach(obj, (val, key) => console.log(key, val));
 ```
 
-- __Iteratee / Predicate Shorthands and Against undefined values__
+- **Iteratee / Predicate Shorthands and Against undefined values**
 
 Built-in array and object
 
 ```js
 const arr = [{ n: [0, 1] }, { n: [] }];
-arr.forEach(e => {console.log(e)}) // => { n: [0, 1] }, { n: [] }
-arr.map(e => e.n) // => [[0, 1], []]
-arr.map(e => e.n[0]) // => 
+arr.forEach(e => {
+  console.log(e);
+}); // => { n: [0, 1] }, { n: [] }
+arr.map(e => e.n); // => [[0, 1], []]
+arr.map(e => e.n[0]); // =>
 ```
 
 Lodash
 
 ```js
 const arr = [{ n: [0, 1] }, { n: [] }];
-_.map(arr, 'n') // same as _.map(arr, _.property('n'))
-_.map(arr, _.property('n[0]')) // => [ 0, undefined ]
-_.forEach(arr, e => console.log(e))
-_.forEach(obj, (val, key) => console.log(key, val))
+_.map(arr, 'n'); // same as _.map(arr, _.property('n'))
+_.map(arr, _.property('n[0]')); // => [ 0, undefined ]
+_.forEach(arr, e => console.log(e));
+_.forEach(obj, (val, key) => console.log(key, val));
 ```
 
-- __Chaining__
+- **Chaining**
 
 Built-in array and object
 
@@ -45,7 +51,9 @@ Built-in array and object
 let arr = [1, 2, 3, 4, 5, '6', '7'];
 arr = arr.map(e => (typeof e !== 'number' ? Number.parseInt(e, 10) : e));
 let sum = 0;
-arr.forEach((e, i) => { if (i % 2 === 0) sum += e; });
+arr.forEach((e, i) => {
+  if (i % 2 === 0) sum += e;
+});
 // => sum = 1 + 3 + 5 + 7 = 16
 ```
 
@@ -63,7 +71,7 @@ const sum = _.chain([1, 2, 3, 4, 5, '6', '7'])
 
 ### 1. chunk
 
-__`Group` elements of an array with the length of size__
+**`Group` elements of an array with the length of size**
 
 lodash: `_.chunk(array, [size=1])`
 
@@ -74,77 +82,79 @@ _.chunk(['a', 'b', 'c', 'd', 'e'], 2);
 
 ### 2. concat
 
-__`Merge` 2 or more arrays and/or values__
+**`Merge` 2 or more arrays and/or values**
 
 lodash: `_.concat(array, [values=....val])`
 
 array: `.concat([values=....val])`
 
 ```js
-_.concat(array, 2, [3], [[4]])
+_.concat(array, 2, [3], [[4]]);
 // => [1, 2, 3, [4]]
 
 const obj1 = { 0: 1, 1: 2, 2: 3, length: 3 };
 const obj2 = { 0: 1, 1: 2, 2: 3, length: 3, [Symbol.isConcatSpreadable]: true };
 console.log([0].concat(obj1, obj2));
 // [ 0, { '0': 1, '1': 2, '2': 3, length: 3 }, 1, 2, 3 ]
-
 ```
 
-> __note:__ `concat` does not treat all array-like objects as arrays by default — only if __`Symbol.isConcatSpreadable`__ is set to true.
+> **note:** `concat` does not treat all array-like objects as arrays by default — only if **`Symbol.isConcatSpreadable`** is set to true.
 
 ### 3. fill
 
-__`Fills` elements of array with value from start up to, but not including__
+**`Fills` elements of array with value from start up to, but not including**
 
 lodash: `_.fill(array, value, [start=0], [end=array.length])`
 
-array:  `.fill(value, [start=0], [end=array.length])`
+array: `.fill(value, [start=0], [end=array.length])`
 
-> __note:__ __Array.prototype.fill()__ returns the modified array
+> **note:** **Array.prototype.fill()** returns the modified array
 
 ```js
 var array = [1, 2, 3];
- 
+
 _.fill(array, 'a');
 // => ['a', 'a', 'a']
- 
+
 _.fill(Array(3), 2);
 // => [2, 2, 2]
 
-[4, 6, 8, 10].fill('*', 1, 3)
+[4, 6, 8, 10].fill('*', 1, 3);
 // => [4, '*', '*', 10]
 ```
 
 ### 4. findIndex
 
-_Return the index of first satisfied element, otherwise -1
+\_Return the index of first satisfied element, otherwise -1
 
 lodash: `_.findIndex(array, [predicate=_.identity], [fromIndex=0])`
 
 array: `.findIndex(function(element, index, array) { /* … */ })`
 
-> __note:__ Built-in Array just receive function as its params
->> predicate param in __`_.findIndex`__ doesnt work with primitive var, use [`.indexOf()`](https://lodash.com/docs/4.17.15#indexOf) instead
+> **note:** Built-in Array just receive function as its params
+>
+> > predicate param in **`_.findIndex`** doesnt work with primitive var, use [`.indexOf()`](https://lodash.com/docs/4.17.15#indexOf) instead
 
 ```js
 var users = [
-  { 'user': 'barney',  'active': false },
-  { 'user': 'pebbles', 'active': true }
+  { user: 'barney', active: false },
+  { user: 'pebbles', active: true },
 ];
- 
-_.findIndex(users, function(o) { return o.user == 'barney'; });
+
+_.findIndex(users, function (o) {
+  return o.user == 'barney';
+});
 // => 0
- 
+
 // Array.prototype.findIndex() cannot use like these example
 // The `_.matches`
-_.findIndex(users, { 'user': 'fred', 'active': false });
+_.findIndex(users, { user: 'fred', active: false });
 // => 1
- 
+
 // The `_.matchesProperty`
 _.findIndex(users, ['active', false]);
 // => 0
- 
+
 // The `_.property`
 _.findIndex(users, 'active');
 // => 2
@@ -152,29 +162,29 @@ _.findIndex(users, 'active');
 
 ### 5. flat
 
-__`Flatten` array up to depth times__
+**`Flatten` array up to depth times**
 
 lodash: `_.flattenDepth(array, [depth=1])`
 
 array: `.flat([depth=1])`
 
-> __note:__ Also __`flatten(array)`__ flatten with single level,  __`flattenDeep(array)`__ flatten with max level
+> **note:** Also **`flatten(array)`** flatten with single level, **`flattenDeep(array)`** flatten with max level
 
 ```js
 var array = [1, [2, [3, [4]], 5]];
- 
+
 _.flattenDepth(array, 1);
 // => [1, 2, [3, [4]], 5]
 ```
 
 ### 6. intersection
 
-__Retrun an `array` of values included in all given arrays__
+**Retrun an `array` of values included in all given arrays**
 
 lodash: `_.intersection([arrays])`
 
 ```js
-_.intersection([2, 1], [2, 3, 1], [2, 3, 1])
+_.intersection([2, 1], [2, 3, 1], [2, 3, 1]);
 // => [ 2, 1 ]
 ```
 
@@ -182,15 +192,22 @@ lodash: `_.intersectionWith([arrays], [comparator])`
 
 ```js
 _.intersectionWith(
-    [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }], 
-    [{ 'x': 1, 'y': 1 }, { 'x': 1, 'y': 2 }], 
-    _.isEqual);
+  [
+    { x: 1, y: 2 },
+    { x: 2, y: 1 },
+  ],
+  [
+    { x: 1, y: 1 },
+    { x: 1, y: 2 },
+  ],
+  _.isEqual
+);
 // => [{ 'x': 1, 'y': 2 }]
 ```
 
 ### 7. join
 
-__Return a string by concatenating(nối) all of the elements of an array (or `array-like object`), separated by specified separator string__
+**Return a string by concatenating(nối) all of the elements of an array (or `array-like object`), separated by specified separator string**
 
 lodash: `_.join(array, [separator=','])`
 
@@ -203,7 +220,7 @@ _.join(['a', 'b', 'c'], '~');
 
 ### 8. pull
 
-__Removes all given values from array.__
+**Removes all given values from array.**
 
 - `_.pull(array, [values])`
 
@@ -223,9 +240,10 @@ _.pullAll(['a', 'b', 'c', 'a', 'b', 'c'], ['a', 'c']);
 
 ```js
 _.pullAllBy(
-    [{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }], 
-    [{ 'x': 1 }, { 'x': 3 }], 
-    'x');
+  [{ x: 1 }, { x: 2 }, { x: 3 }, { x: 1 }],
+  [{ x: 1 }, { x: 3 }],
+  'x'
+);
 // => [{ 'x': 2 }]
 ```
 
@@ -233,36 +251,55 @@ _.pullAllBy(
 
 ```js
 _.pullAllWith(
-    [{ 'x': 1, 'y': 2 }, { 'x': 3, 'y': 4 }, { 'x': 5, 'y': 6 }], 
-    [{ 'x': 3, 'y': 4 }], 
-    _.isEqual);
+  [
+    { x: 1, y: 2 },
+    { x: 3, y: 4 },
+    { x: 5, y: 6 },
+  ],
+  [{ x: 3, y: 4 }],
+  _.isEqual
+);
 // => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
 ```
 
 - `_.pullAt(array, [indexes])`
 
-> __note:__ return new array of removed elements
+> **note:** return new array of removed elements
 
 ```js
 var array = ['a', 'b', 'c', 'd'];
 var pulled = _.pullAt(array, [1, 3]);
- 
+
 // => array = ['a', 'c']
 // => pulled = ['b', 'd']
 ```
 
 ### 9. uniq
 
-__Return an array of `unique` value (the first occurrence)__
+**Return an array of `unique` value (the first occurrence)**
 
-- `_.uniqBy` accept iteratee like `_.identity`, `_.uniqWith` accept comparator like _.isEqual
-. So that, if u want to compare object u need to use uniqWith
+- `_.uniqBy` accept iteratee like `_.identity`, `_.uniqWith` accept comparator like \_.isEqual
+  . So that, if u want to compare object u need to use uniqWith
 
 ```js
-  _.uniqWith([{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 1, y: 2 }], _.isEqual) 
-  // => [ { x: 1, y: 2 }, { x: 2, y: 1 } ]
-  _.uniqBy([{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 1, y: 2 }], _.identity)
-  // => [ { x: 1, y: 2 }, { x: 2, y: 1 }, { x: 1, y: 2 } ]
+_.uniqWith(
+  [
+    { x: 1, y: 2 },
+    { x: 2, y: 1 },
+    { x: 1, y: 2 },
+  ],
+  _.isEqual
+);
+// => [ { x: 1, y: 2 }, { x: 2, y: 1 } ]
+_.uniqBy(
+  [
+    { x: 1, y: 2 },
+    { x: 2, y: 1 },
+    { x: 1, y: 2 },
+  ],
+  _.identity
+);
+// => [ { x: 1, y: 2 }, { x: 2, y: 1 }, { x: 1, y: 2 } ]
 ```
 
 - `_.uniq(array)`
@@ -274,23 +311,23 @@ _.uniq([2, 1, 2]);
 
 - `_.uniqBy(array, [iteratee=_.identity])`
 
-```js
+````js
 _.uniqBy([2.1, 1.2, 2.3], Math.floor);
 // => [2.1, 1.2]
 ```js
 - `_.uniqWith(array, [comparator])`
-```
+````
 
 ### 10. countBy
 
-__Return an object { `key`: value, `value`: number of times the key was returned by iteratee }__
+**Return an object { `key`: value, `value`: number of times the key was returned by iteratee }**
 
 lodash: `_.countBy(collection, [iteratee=_.identity])`
 
 ```js
 _.countBy([6.1, 4.2, 6.3], Math.floor);
 // => { '4': 1, '6': 2 }
- 
+
 // The `_.property` iteratee shorthand.
 _.countBy(['one', 'two', 'three'], 'length');
 // => { '3': 2, '5': 1 }
@@ -298,27 +335,27 @@ _.countBy(['one', 'two', 'three'], 'length');
 
 ### 11. every
 
-__Check if predicate return `true` for all elements__
+**Check if predicate return `true` for all elements**
 
 lodash: `_.every(collection, [predicate=_.identity])`
 
 ```js
 _.every([true, 1, null, 'yes'], Boolean);
 // => false
- 
+
 var users = [
-  { 'user': 'barney', 'age': 36, 'active': false },
-  { 'user': 'fred',   'age': 40, 'active': false }
+  { user: 'barney', age: 36, active: false },
+  { user: 'fred', age: 40, active: false },
 ];
- 
+
 // The `_.matches` iteratee shorthand.
-_.every(users, { 'user': 'barney', 'active': false });
+_.every(users, { user: 'barney', active: false });
 // => false
- 
+
 // The `_.matchesProperty` iteratee shorthand.
 _.every(users, ['active', false]);
 // => true
- 
+
 // The `_.property` iteratee shorthand.
 _.every(users, 'active');
 // => false
@@ -326,12 +363,12 @@ _.every(users, 'active');
 
 ### 12. groupBy
 
-__Like `countBy` but value of each key is an array of elements represent for that key__
+**Like `countBy` but value of each key is an array of elements represent for that key**
 
 ```js
 _.groupBy([6.1, 4.2, 6.3], Math.floor);
 // => { '4': [4.2], '6': [6.1, 6.3] }
- 
+
 // The `_.property` iteratee shorthand.
 _.groupBy(['one', 'two', 'three'], 'length');
 // => { '3': ['one', 'two'], '5': ['three'] }
@@ -367,13 +404,13 @@ Objects with a "length" property are iterated like arrays (array-like object)
 ```js
 _.forEach({ 0: 1, 1: { x: 1 }, 2: 'asdas', length: 2 }, (value, index, arr) => {
   console.log(value, index);
-}); 
+});
 // =>   1 0
         { x: 1 } 1
 
 _.forIn({ 0: 1, 1: { x: 1 }, 2: 'asdas', length: 2 }, (value, key, obj) => {
   console.log(value, key);
-}); 
+});
 // =>   1 0
         { x: 1 } 1
         asdas 2
@@ -410,8 +447,8 @@ console.log(
   _.isEqualWith(
     { a: 1 },
     { a: '1' },
-    (o1, o2) => _.toString(o1.a) === _.toString(o2.a),
-  ), // => true
+    (o1, o2) => _.toString(o1.a) === _.toString(o2.a)
+  ) // => true
 );
 ```
 

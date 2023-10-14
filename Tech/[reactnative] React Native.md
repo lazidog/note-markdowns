@@ -73,15 +73,11 @@ const element = <Text>Hello, {name}</Text>;
 
 ```jsx
 <MyButton color="blue" shadowSize={2}>
-    Click Me
-</MyButton>
+  Click Me
+</MyButton>;
 
 //compiles to
-React.createElement(
-    MyButton,
-    {color: 'blue', shadowSize: 2},
-    'Click Me'
-)
+React.createElement(MyButton, { color: 'blue', shadowSize: 2 }, 'Click Me');
 ```
 
 - User-Defined Components Must be Capitalized. React think `<hello>` is an HTML tag because its not capitalied`</hello>`
@@ -91,9 +87,9 @@ React.createElement(
 - Props object
 
 ```jsx
-return <Greeting firstName="Ben" lastName="Hector" />
+return <Greeting firstName="Ben" lastName="Hector" />;
 //equal
-const props = {firstName: 'Ben', lastName: 'Hector'};
+const props = { firstName: 'Ben', lastName: 'Hector' };
 return <Greeting {...props} />;
 ```
 
@@ -106,14 +102,16 @@ return <Greeting {...props} />;
 - **Note:** setter is asynchronous and if u need previous state to determine next one u will need to call with callback as below:
 
 ```js
-const [num, setNum] = useState(0)
-useEffect(() => {   //manage lifecycle
-    //on component mount
-    const workId = setInterval(() => setNum(num => num + 1), 1000)
-    return () => { //on component unmount
-        clearInterval(workId)
-    }
-}, [])
+const [num, setNum] = useState(0);
+useEffect(() => {
+  //manage lifecycle
+  //on component mount
+  const workId = setInterval(() => setNum(num => num + 1), 1000);
+  return () => {
+    //on component unmount
+    clearInterval(workId);
+  };
+}, []);
 ```
 
 ## Debugging

@@ -2,7 +2,7 @@
 
 - Redis is an `in-memory data structure store` used as a database, cache, and message broker.
 
-__`Key features`__
+**`Key features`**
 
 - in-memory dataset
 - key with expiration
@@ -13,14 +13,14 @@ __`Key features`__
 - atomic operations
 - no concept of database
 
-__`Use case`__
+**`Use case`**
 
 - sync
 - caching
 - session
 - streaming
 
-__`Advantages`__
+**`Advantages`**
 
 - Fast
 - Replication
@@ -28,7 +28,7 @@ __`Advantages`__
 - High availability via Redis Sentinel
 - Redis Hashing
 
-__`Disadvantages`__
+**`Disadvantages`**
 
 - Single-threaded
 - use RAM
@@ -92,7 +92,7 @@ OK
 
 - Bitmaps is a set of bit defined on the String type
 
-__`BITFIELD`__
+**`BITFIELD`**
 
 BITFIELD has size limit: 64bits for signed and 63bits for unsigned
 
@@ -115,7 +115,7 @@ bitfield bkey set u4 #0 12 set u10 #1 10
 
 ![BITFIELD](./public/images/bitfieldbypos.PNG)
 
-__`Note`__
+**`Note`**
 
 - `set` command has additional args: `NX` (set val if key not exist), `XX` (set val only if key exist)
 - `scan` - something u must know:
@@ -179,7 +179,7 @@ __`Note`__
 
 Transaction discarded when exec if have system error or syntax error (such as incr key "abc"), if syntax is valid but command cannot operate like incr a list-type key, the transaction still execute and ignore the invalid command.
 
-__`Command`__
+**`Command`**
 
 - MULTI: indicate the start of transaction
 - EXEC: execute queued commands
@@ -187,7 +187,7 @@ __`Command`__
 - WATCH: transaction will fail if any watched keys have been modified.
 - UNWATCH: remove all watched keys
 
-__`If a particular key has been changed by another process before transaction executed?`__
+**`If a particular key has been changed by another process before transaction executed?`**
 
 - Use WATCH command outside a Transaction to check if the one or more keys has been changed.
 - All watched keys will be unwatched after transaction completed
@@ -209,7 +209,7 @@ Snapshots of dataset is saved on disk by default, in a `binary file` called `dum
 
 ![snapshot](public/images/snapshots.PNG)
 
-__How snapshot work?__
+**How snapshot work?**
 
 - Redis forks parent process to a child use `copy-on-write` trick. [nore](https://www.youtube.com/watch?v=MBzcgNaXjvc&t=11s)
 
@@ -219,17 +219,17 @@ This configuration below will make Redis dump the dataset to disk every 60 secon
 
 ```js
 save 60 1000
-//or 
+//or
 bgsave 60 1000
 ```
 
-__`Advantages`__
+**`Advantages`**
 
 - RDB doesnt impact the performance since the main process only has to fork its process and the child will take care of all
 - Faster when restoring large dataset
 - Dump file is very compact (nhỏ gọn) and can be transfered to far data center
 
-__`Disadvantages`__
+**`Disadvantages`**
 
 - Can lose minutes of data because RDB take snapshot every N minute, so in case Redis stop working, u will lose the lastest minutes of data
 - fork() operation can be time consuming if the dataset is big which can lead redis to stop serving client in some milliseconds or seconds
@@ -243,7 +243,7 @@ The commands are logged using the same format as Redis protocol.
 ```txt
 *4            // 4 arguments
 $3            // length of 3
-set 
+set
 $4            // length of 4
 tien
 $4            // length of 4
@@ -253,14 +253,14 @@ NX            //NX -- set value if key not exist
                 XX -- set value ONLY IF key exist
 ```
 
-__`Advantages`__
+**`Advantages`**
 
 - More durable depending on the fsync policy (every query, every second and no fsync)
 - If the command log failed for some reason (disk full or something), the disk check AOF tool to fix it
 - Able to rewrite in background: While Redis continues append to old file, a new one is created with the shortest sequence of commands needed to rebuild the current dataset. And once it done, Redis switch them and start appending to new one
 - Even if u trigger the flush command, if the file hasnt been rewritten, u can edit the AOF file, remove flush command and restart server.
 
-__`Disadvantages`__
+**`Disadvantages`**
 
 - AOF file are bigger than RDB
 - Can be slower depending on the fsync policy
@@ -271,7 +271,7 @@ __`Disadvantages`__
 
 Main instance and one or more secondary instances. These instances can help scale reads from Redis or provide failover in case the main is lost.
 
-__`Redis replication`__
+**`Redis replication`**
 
 Every main instance has a `Replication ID` and a `offset`. The offset is incremented for every action happens on the main. When Redis replica instance is a few offset behind the main, it receives the remaining commands from the primary, which is then replayed on its dataset until it is in sync. If the two instances cannot agree on a replication ID or the offset is unknown to the main instance, the replica will then request a full synchronization, the primary instance create a new RDB snapshot and send it to replica with current offset
 
