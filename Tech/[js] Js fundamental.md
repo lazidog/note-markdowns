@@ -1,6 +1,8 @@
 # JS
 
-## 1. Scope
+## Fundemental
+
+### 1. Scope
 
 - block scope: const, let
 - func scope: var
@@ -31,6 +33,34 @@ function fun() {
 
 ### 4. This keyword [link](https://jintechflow.wordpress.com/2020/09/27/dive-in-depth-into-javascript-functions/#What-is-a-JavaScript-Function)
 
+- In an `object method`, this refers to the `object`.
+
+- `Alone`, this refers to the `global object`.
+
+- In a `function`, this refers to the `global object`.
+
+- In a `function`, in `strict mode`, this is `undefined`.
+
+- In an `event`, this refers to the element that received the event.
+
+- Methods like call(), apply(), and bind() can refer this to any object.
+
+  ```js
+  const person1 = {
+    fullName: function () {
+      return this.firstName + ' ' + this.lastName;
+    },
+  };
+
+  const person2 = {
+    firstName: 'John',
+    lastName: 'Doe',
+  };
+
+  // Return "John Doe":
+  person1.fullName.call(person2);
+  ```
+
 ### 5. Date
 
 `Date` objects contain a Number that represents milliseconds since 1 January 1970 UTC
@@ -41,19 +71,19 @@ There are five basic forms for the `Date()` constructor:
 
 - No parameters
 
-the newly-created Date object represents the current date and time
+  > the newly-created Date object represents the current date and time
 
 - Time value or timestamp number
 
-An integer value representing the number of milliseconds since January 1, 1970, 00:00:00 UTC
+  > An integer value representing the number of milliseconds since January 1, 1970, 00:00:00 UTC
 
 - Date string
 
-> **always make sure that the input conforms to the ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)** > **Date-only strings (e.g. "1970-01-01") are treated as UTC, while date-time strings (e.g. "1970-01-01T12:00") are treated as local.**
+  > **always make sure that the input conforms to the ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)** > **Date-only strings (e.g. "1970-01-01") are treated as UTC, while date-time strings (e.g. "1970-01-01T12:00") are treated as local.**
 
 - Date Object
 
-This effectively makes a copy of the existing Date object with the same date and time
+  > This effectively makes a copy of the existing Date object with the same date and time
 
 - Individual date and time component values
 
@@ -72,6 +102,31 @@ Calling `new Date()` returns a Date object. If called with an invalid date strin
 ```js
 console.log(new Date(undefined)); // Invalid Date
 console.log(new Date(null)); // 1970-01-01T00:00:00.000Z
+```
+
+`Method`
+
+- .toString() -> Sat Oct 28 2023 23:45:09 GMT+0700
+- .toDateString() -> Sat Oct 28 2023
+- .toUTCString() -> Sat, 28 Oct 2023 16:45:48 GMT
+- .toISOString() -> 2023-10-28T16:46:09.823Z
+
+### 6. Hoising
+
+JavaScript only hoists `declarations`, not `initializations`
+
+```js
+var x = 5; // Initialize x
+var y = 7; // Initialize y
+var a;
+
+// x - 5
+// y - 7
+// a - undefined
+// z - not declare
+
+var z = 1;
+a = 2;
 ```
 
 ## AIRBNB STYLE GUILD
