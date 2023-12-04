@@ -5,7 +5,7 @@
 ### 1. Scope
 
 - block scope: const, let
-- func scope: var
+- func/global scope: var
 - global scope: variables which declared outside func, assiged without declared
 
 **note**: all global variables can access by using object `global` or `globalThis`
@@ -21,13 +21,17 @@ function fun() {
   a = 'a'; // a is assiged without declared
   global.c = 'c';
 }
+
+var x = 2;
+var x = 1;
+// => x = 1;
+
+let x = 2;
+let x = 1;
+// => error: x declared
 ```
 
 ### 2. Hosting
-
-- JavaScript only hoists declarations, not initializations.
-- Variables defined with `let` and `const` are hoisted to the top of the block, but not initialized.
-- Functions in particular are moved at the top of their scope.
 
 ### 3. Function, Array and Object
 
@@ -79,7 +83,9 @@ There are five basic forms for the `Date()` constructor:
 
 - Date string
 
-  > **always make sure that the input conforms to the ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)** > **Date-only strings (e.g. "1970-01-01") are treated as UTC, while date-time strings (e.g. "1970-01-01T12:00") are treated as local.**
+  > **always make sure that the input conforms to the ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)**
+  >
+  > **Date-only strings (e.g. "1970-01-01") are treated as UTC, while date-time strings (e.g. "1970-01-01T12:00") are treated as local.**
 
 - Date Object
 
@@ -89,8 +95,8 @@ There are five basic forms for the `Date()` constructor:
 
 #### Return value
 
-Calling `new Date()` returns a Date object. If called with an invalid date string, or if the date to be constructed will have a UNIX timestamp less than -8,640,000,000,000,000 or greater than 8,640,000,000,000,000 (100,000,000 days) milliseconds, it returns a Date object whose toString() method returns the literal string Invalid Date.
-
+> Calling `new Date()` returns a Date object. If called with an invalid date string, or if the date to be constructed will have a UNIX timestamp less than -8,640,000,000,000,000 or greater than 8,640,000,000,000,000 (100,000,000 days) milliseconds, it returns a Date object whose toString() method returns the literal string Invalid Date.
+>
 > Calling the `Date()` function (without the `new` keyword) returns a string representation of the current date and time, exactly as new Date().toString() does. Any arguments given in a Date() function call (without the new keyword) are ignored; regardless of whether it's called with an invalid date string — or even called with any arbitrary object or other primitive as an argument — it always returns a string representation of the current date and time.
 
 #### Passing a non-Date, non-string, non-number value
@@ -111,9 +117,11 @@ console.log(new Date(null)); // 1970-01-01T00:00:00.000Z
 - .toUTCString() -> Sat, 28 Oct 2023 16:45:48 GMT
 - .toISOString() -> 2023-10-28T16:46:09.823Z
 
-### 6. Hoising
+### 6. Hoisting
 
-JavaScript only hoists `declarations`, not `initializations`
+- JavaScript only hoists `declarations`, not `initializations`
+- Variables defined with `let` and `const` are hoisted to the top of the block, but not initialized.
+- Functions in particular are moved at the top of their scope.
 
 ```js
 var x = 5; // Initialize x
