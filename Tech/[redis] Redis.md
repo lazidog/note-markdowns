@@ -33,7 +33,7 @@
 - Single-threaded
 - use RAM
 - no reference
-- no concept of nesting
+- no concept of nesting (no join or no query language)
 
 ## Data structures
 

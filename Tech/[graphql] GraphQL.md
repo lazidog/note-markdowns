@@ -59,10 +59,12 @@ It defines what and how clients can query or mutate data
 
 **`Resolver arguments`**
 
-| parent | the return value of the previous resolver |
-| args | GraphQL args |
-| context | object shared across all resolvers |
-| info | info of operation's execution state (field name, path...) |
+|         |                                                           |
+| ------- | --------------------------------------------------------- |
+| parent  | the return value of the previous resolver                 |
+| args    | GraphQL args                                              |
+| context | object shared across all resolvers                        |
+| info    | info of operation's execution state (field name, path...) |
 
 **`Default resolver`**
 
